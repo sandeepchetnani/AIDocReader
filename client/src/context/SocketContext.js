@@ -11,7 +11,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     const socketInstance = io(
-      process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5001',
+      process.env.NODE_ENV === 'production' ? (process.env.REACT_APP_API_URL || 'https://aidocreader.onrender.com') : 'http://localhost:5001',
       {
         transports: ['websocket', 'polling']
       }
