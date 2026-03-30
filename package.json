@@ -1,0 +1,33 @@
+{
+  "name": "doc-reader-llm",
+  "version": "1.0.0",
+  "description": "AI-Powered Document Analyser with Node.js, React, AWS S3, Lambda, MongoDB, and LLM APIs",
+  "main": "server/index.js",
+  "scripts": {
+    "start:server": "node server/index.js",
+    "dev:server": "nodemon server/index.js",
+    "start:client": "cd client && npm start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run start:client\"",
+    "install:all": "npm install && cd client && npm install",
+    "deploy:lambda": "cd lambda && zip -r function.zip . && aws lambda update-function-code --function-name doc-processor --zip-file fileb://function.zip"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.525.0",
+    "@aws-sdk/s3-request-presigner": "^3.525.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "express-rate-limit": "^8.3.1",
+    "mammoth": "^1.12.0",
+    "mongoose": "^8.2.1",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^4.28.4",
+    "pdf-parse": "^1.1.1",
+    "socket.io": "^4.7.4",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.0"
+  }
+}
