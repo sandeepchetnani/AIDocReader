@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5001/api');
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -15,7 +15,7 @@ export const documentService = {
     formData.append('file', file);
     formData.append('userId', userId);
 
-    const response = await api.post('/documents/upload', formData, {
+    const response = await api.post('/api/documents/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
@@ -31,24 +31,24 @@ export const documentService = {
   },
 
   async getDocuments(userId) {
-    const response = await api.get(`/documents/user/${userId}`);
+    const response = await api.get(`/api/documents/user/${userId}`);
     return response.data;
   },
 
   async getDocument(documentId) {
-    const response = await api.get(`/documents/${documentId}`);
+    const response = await api.get(`/api/documents/${documentId}`);
     return response.data;
   },
 
   async deleteDocument(documentId) {
-    const response = await api.delete(`/documents/${documentId}`);
+    const response = await api.delete(`/api/documents/${documentId}`);
     return response.data;
   }
 };
 
 export const chatService = {
   async sendMessage(documentId, userId, message, sessionId = null) {
-    const response = await api.post('/chat/message', {
+    const response = await api.post('/api/chat/message', {
       documentId,
       userId,
       message,
@@ -61,17 +61,17 @@ export const chatService = {
     const params = { userId };
     if (sessionId) params.sessionId = sessionId;
     
-    const response = await api.get(`/chat/history/${documentId}`, { params });
+    const response = await api.get(`/api/chat/history/${documentId}`, { params });
     return response.data;
   },
 
   async getChatSessions(userId) {
-    const response = await api.get(`/chat/sessions/${userId}`);
+    const response = await api.get(`/api/chat/sessions/${userId}`);
     return response.data;
   },
 
   async deleteChatHistory(sessionId, userId) {
-    const response = await api.delete(`/chat/history/${sessionId}`, {
+    const response = await api.delete(`/api/chat/history/${sessionId}`, {
       params: { userId }
     });
     return response.data;
